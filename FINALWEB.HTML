@@ -1,1 +1,1584 @@
-FINALWEB.HTNL
+
+
+Index · HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>E-Max Computer Education | Empowering Skills, Building Careers</title>
+<meta name="description" content="E-Max Computer Education - Premier computer training institute offering DCA, ADCA, Tally, Graphic Design, Web Design and more. Join us to empower your skills and build your career."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#030a03;
+  --indigo:#16a34a;
+  --violet:#22c55e;
+  --cyan:#4ade80;
+  --pink:#86efac;
+  --glass:rgba(255,255,255,0.05);
+  --glass-border:rgba(34,197,94,0.2);
+  --text:#f0fdf4;
+  --text-muted:#86a886;
+  --card-bg:rgba(5,15,5,0.78);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--navy);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+ 
+/* ── CANVAS BACKGROUND ── */
+#bg-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+ 
+/* ── LOADING SCREEN ── */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .6s ease;
+}
+#loader .logo-load{
+  font-family:'Orbitron',sans-serif;
+  font-size:2.5rem;font-weight:900;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:pulse 1.5s infinite;
+}
+#loader .bar-wrap{width:220px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:2rem;overflow:hidden;}
+#loader .bar{height:100%;width:0;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:2px;animation:load 2s ease forwards;}
+@keyframes load{to{width:100%;}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+ 
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 2rem;
+  background:rgba(10,14,39,.85);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--glass-border);
+  transition:all .3s;
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:900;
+  background:linear-gradient(135deg,#22c55e,#ffffff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  cursor:pointer;white-space:nowrap;
+}
+.nav-links{display:flex;gap:.2rem;flex-wrap:wrap;}
+.nav-links a{
+  color:var(--text-muted);font-size:.78rem;font-weight:500;
+  text-decoration:none;padding:.45rem .7rem;border-radius:8px;
+  cursor:pointer;transition:all .25s;letter-spacing:.02em;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:#fff;background:var(--glass);
+  box-shadow:0 0 12px rgba(34,197,94,.3);
+}
+.nav-actions{display:flex;gap:.6rem;align-items:center;}
+.btn-nav{
+  padding:.45rem 1rem;border-radius:8px;font-size:.8rem;font-weight:600;
+  cursor:pointer;border:none;transition:all .25s;
+}
+.btn-outline{background:transparent;border:1px solid #16a34a;color:#22c55e;}
+.btn-outline:hover{background:#16a34a;color:#fff;}
+.btn-primary{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;}
+.btn-primary:hover{opacity:.85;transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
+ 
+/* DARK/LIGHT TOGGLE */
+.theme-toggle{
+  width:38px;height:22px;border-radius:11px;
+  background:var(--glass-border);border:1px solid var(--glass-border);
+  cursor:pointer;position:relative;transition:.3s;
+}
+.theme-toggle::after{
+  content:'☀️';position:absolute;top:1px;left:2px;
+  font-size:14px;transition:.3s;
+}
+body.light-mode .theme-toggle::after{content:'🌙';left:18px;}
+body.light-mode{
+  --navy:#f0f4ff;--text:#1e293b;--text-muted:#475569;
+  --glass:rgba(0,0,0,.04);--glass-border:rgba(0,0,0,.1);
+  --card-bg:rgba(255,255,255,.85);
+}
+ 
+/* ── PAGE SECTIONS ── */
+.page{display:none;position:relative;z-index:1;}
+.page.active{display:block;}
+ 
+/* ── HERO ── */
+#home{padding-top:80px;}
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;
+  padding:4rem 1.5rem 2rem;
+  position:relative;overflow:hidden;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);
+  padding:.4rem 1rem;border-radius:999px;font-size:.8rem;color:var(--indigo);
+  margin-bottom:1.5rem;animation:fadeDown .8s ease both;
+}
+.hero h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(2rem,6vw,4.5rem);
+  font-weight:900;line-height:1.1;
+  animation:fadeDown .8s .1s ease both;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--indigo),var(--cyan),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-size:200%;animation:gradShift 4s infinite alternate;
+}
+@keyframes gradShift{0%{background-position:0%;}100%{background-position:100%;}}
+.hero-tagline{
+  font-size:clamp(1rem,2.5vw,1.35rem);color:var(--text-muted);
+  margin:1.2rem auto 2rem;max-width:600px;
+  animation:fadeDown .8s .2s ease both;
+}
+.type-cursor::after{content:'|';animation:blink .7s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeDown .8s .3s ease both;}
+.btn-hero{
+  padding:.9rem 2rem;border-radius:12px;font-size:1rem;font-weight:700;
+  cursor:pointer;border:none;transition:all .3s;letter-spacing:.03em;
+}
+.btn-hero-primary{
+  background:linear-gradient(135deg,var(--indigo),var(--violet));
+  color:#fff;box-shadow:0 0 30px rgba(99,102,241,.4);
+}
+.btn-hero-primary:hover{transform:translateY(-3px);box-shadow:0 0 40px rgba(99,102,241,.6);}
+.btn-hero-secondary{
+  background:var(--glass);color:#fff;
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(8px);
+}
+.btn-hero-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-3px);}
+ 
+/* 3D LAB ANIMATION */
+.lab-3d{
+  width:min(500px,90vw);height:280px;
+  margin:3rem auto 2rem;position:relative;
+  animation:float3d 6s ease-in-out infinite;
+}
+@keyframes float3d{0%,100%{transform:translateY(0) rotateX(0deg);}50%{transform:translateY(-18px) rotateX(2deg);}}
+.monitor-wrap{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-55%) perspective(600px) rotateX(8deg);
+  filter:drop-shadow(0 20px 40px rgba(99,102,241,.5));
+}
+.monitor{
+  width:260px;height:160px;
+  background:linear-gradient(135deg,#1e2140,#0d0f22);
+  border-radius:12px 12px 4px 4px;
+  border:2px solid rgba(99,102,241,.4);
+  padding:10px;position:relative;overflow:hidden;
+}
+.monitor::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(99,102,241,.05),transparent);
+}
+.monitor-screen{
+  width:100%;height:100%;background:#050810;
+  border-radius:6px;overflow:hidden;position:relative;
+}
+.code-line{
+  font-family:monospace;font-size:.65rem;
+  color:var(--cyan);padding:2px 6px;opacity:0;
+  animation:codeFade 4s infinite;
+}
+.code-line:nth-child(2){animation-delay:.5s;color:var(--violet);}
+.code-line:nth-child(3){animation-delay:1s;color:var(--pink);}
+.code-line:nth-child(4){animation-delay:1.5s;color:#4ade80;}
+.code-line:nth-child(5){animation-delay:2s;color:var(--cyan);}
+.code-line:nth-child(6){animation-delay:2.5s;color:var(--violet);}
+@keyframes codeFade{0%,100%{opacity:0;transform:translateX(-8px);}15%,70%{opacity:1;transform:translateX(0);}}
+.monitor-base{
+  width:80px;height:12px;background:linear-gradient(135deg,#1e2140,#0d0f22);
+  border:1px solid rgba(99,102,241,.3);
+  margin:0 auto;border-radius:0 0 4px 4px;
+}
+.monitor-stand{
+  width:40px;height:20px;background:linear-gradient(135deg,#1e2140,#0d0f22);
+  border:1px solid rgba(99,102,241,.3);
+  margin:0 auto;border-radius:0 0 6px 6px;
+}
+.floating-icon{
+  position:absolute;font-size:1.8rem;
+  animation:floatIcon 5s ease-in-out infinite;
+  filter:drop-shadow(0 0 10px currentColor);
+}
+.fi-1{top:10%;left:5%;animation-delay:0s;}
+.fi-2{top:20%;right:8%;animation-delay:.8s;}
+.fi-3{bottom:30%;left:8%;animation-delay:1.6s;}
+.fi-4{bottom:20%;right:12%;animation-delay:2.4s;}
+.fi-5{top:50%;left:2%;animation-delay:3.2s;}
+@keyframes floatIcon{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-12px) rotate(8deg);}}
+ 
+/* STATS */
+.stats-row{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;
+  padding:3rem 1.5rem;animation:fadeUp 1s .5s ease both;
+}
+.stat-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);border-radius:16px;
+  padding:1.5rem 2rem;text-align:center;min-width:150px;
+  transition:transform .3s;
+}
+.stat-card:hover{transform:translateY(-6px);}
+.stat-num{
+  font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-label{font-size:.82rem;color:var(--text-muted);margin-top:.3rem;}
+ 
+/* ── SECTION COMMON ── */
+section{padding:5rem 1.5rem;}
+.container{max-width:1200px;margin:0 auto;}
+.section-label{
+  font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--indigo);font-weight:600;margin-bottom:.8rem;
+}
+.section-title{
+  font-family:'Orbitron',sans-serif;font-size:clamp(1.5rem,4vw,2.5rem);
+  font-weight:700;margin-bottom:1rem;
+}
+.section-sub{color:var(--text-muted);max-width:600px;margin-bottom:3rem;line-height:1.7;}
+.grad-text{
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+ 
+/* ── GLASS CARD ── */
+.glass-card{
+  background:var(--card-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px);border-radius:20px;
+  transition:all .35s;overflow:hidden;position:relative;
+}
+.glass-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(99,102,241,.05),transparent);
+  opacity:0;transition:.35s;border-radius:inherit;
+}
+.glass-card:hover{transform:translateY(-8px);border-color:rgba(99,102,241,.4);}
+.glass-card:hover::before{opacity:1;}
+ 
+/* ── COURSES GRID ── */
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;}
+.course-card{padding:1.8rem;}
+.course-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:1.2rem;
+}
+.course-card h3{font-size:1rem;font-weight:700;margin-bottom:.4rem;}
+.course-card p{font-size:.82rem;color:var(--text-muted);margin-bottom:1rem;line-height:1.6;}
+.course-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.badge{
+  font-size:.7rem;padding:.25rem .7rem;border-radius:999px;font-weight:600;
+}
+.badge-purple{background:rgba(139,92,246,.2);color:var(--violet);}
+.badge-cyan{background:rgba(34,211,238,.15);color:var(--cyan);}
+.badge-pink{background:rgba(236,72,153,.15);color:var(--pink);}
+.btn-enroll{
+  width:100%;padding:.65rem;border-radius:10px;font-size:.83rem;font-weight:700;
+  background:linear-gradient(135deg,var(--indigo),var(--violet));
+  color:#fff;border:none;cursor:pointer;transition:.3s;
+}
+.btn-enroll:hover{opacity:.85;transform:translateY(-2px);}
+ 
+/* ── TESTIMONIALS ── */
+.testimonials{
+  display:flex;gap:1.5rem;overflow-x:auto;padding-bottom:1rem;
+  scrollbar-width:thin;scrollbar-color:var(--indigo) transparent;
+}
+.testi-card{
+  min-width:300px;padding:1.8rem;
+  background:var(--card-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px);border-radius:20px;flex-shrink:0;
+}
+.testi-stars{color:#facc15;font-size:.9rem;margin-bottom:.8rem;}
+.testi-text{font-size:.88rem;color:var(--text-muted);line-height:1.7;font-style:italic;margin-bottom:1rem;}
+.testi-author{display:flex;align-items:center;gap:.8rem;}
+.testi-avatar{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;font-weight:700;color:#fff;
+}
+.testi-name{font-size:.88rem;font-weight:600;}
+.testi-role{font-size:.75rem;color:var(--text-muted);}
+ 
+/* ── ABOUT TIMELINE ── */
+.timeline{position:relative;padding-left:2rem;}
+.timeline::before{
+  content:'';position:absolute;left:.5rem;top:0;bottom:0;
+  width:2px;background:linear-gradient(180deg,var(--indigo),var(--cyan));
+}
+.tl-item{margin-bottom:2rem;position:relative;}
+.tl-dot{
+  position:absolute;left:-2rem;top:.3rem;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--indigo);border:2px solid var(--cyan);
+  box-shadow:0 0 12px var(--indigo);
+}
+.tl-year{font-size:.75rem;color:var(--cyan);font-weight:700;margin-bottom:.3rem;}
+.tl-text{font-size:.9rem;color:var(--text-muted);line-height:1.6;}
+ 
+/* ── FACULTY ── */
+.faculty-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem;}
+.faculty-card{padding:1.8rem;text-align:center;}
+.faculty-avatar{
+  width:80px;height:80px;border-radius:50%;
+  margin:0 auto 1rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  border:2px solid var(--glass-border);
+}
+.faculty-card h3{font-size:.95rem;font-weight:700;margin-bottom:.2rem;}
+.faculty-card p{font-size:.8rem;color:var(--text-muted);}
+.faculty-exp{
+  margin-top:.7rem;font-size:.75rem;
+  color:var(--indigo);font-weight:600;
+}
+ 
+/* ── ADMISSION FORM ── */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;}
+.form-group label{display:block;font-size:.8rem;color:var(--text-muted);margin-bottom:.5rem;font-weight:500;}
+.form-control{
+  width:100%;padding:.8rem 1rem;border-radius:10px;font-size:.88rem;
+  background:rgba(255,255,255,.05);border:1px solid var(--glass-border);
+  color:var(--text);outline:none;transition:.3s;
+  font-family:'Inter',sans-serif;
+}
+.form-control:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(99,102,241,.15);}
+.form-control option{background:#0a0e27;}
+.btn-submit{
+  margin-top:1.5rem;padding:1rem 2.5rem;border-radius:12px;
+  background:linear-gradient(135deg,var(--indigo),var(--violet));
+  color:#fff;font-size:1rem;font-weight:700;border:none;cursor:pointer;
+  transition:.3s;box-shadow:0 0 20px rgba(99,102,241,.4);
+}
+.btn-submit:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(99,102,241,.6);}
+.thankyou-msg{
+  display:none;text-align:center;padding:3rem;
+  animation:fadeUp .6s ease;
+}
+.thankyou-msg .checkmark{font-size:4rem;margin-bottom:1rem;}
+.thankyou-msg h3{font-size:1.5rem;font-weight:700;margin-bottom:.5rem;}
+ 
+/* ── GALLERY ── */
+.gallery-grid{
+  columns:3;gap:1rem;
+}
+@media(max-width:768px){.gallery-grid{columns:2;}}
+@media(max-width:480px){.gallery-grid{columns:1;}}
+.gallery-item{
+  break-inside:avoid;margin-bottom:1rem;border-radius:14px;overflow:hidden;
+  background:var(--card-bg);border:1px solid var(--glass-border);
+  cursor:pointer;transition:.3s;position:relative;
+}
+.gallery-item:hover{transform:scale(1.02);border-color:var(--indigo);}
+.gallery-thumb{
+  width:100%;aspect-ratio:4/3;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+  background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(139,92,246,.1));
+}
+.gallery-cap{font-size:.78rem;color:var(--text-muted);padding:.7rem 1rem;}
+ 
+/* ── RESULTS ── */
+.toppers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;}
+.topper-card{padding:1.5rem;text-align:center;}
+.topper-rank{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:900;
+  margin:0 auto .8rem;
+}
+.rank-1{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#000;}
+.rank-2{background:linear-gradient(135deg,#9ca3af,#d1d5db);color:#000;}
+.rank-3{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;}
+.rank-n{background:var(--glass);color:var(--text);}
+.topper-card h3{font-size:.92rem;font-weight:700;}
+.topper-card p{font-size:.78rem;color:var(--text-muted);}
+.topper-score{font-size:1.2rem;font-weight:700;color:var(--cyan);margin:.4rem 0;}
+ 
+/* ── PLACEMENT ── */
+.partners-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;margin-bottom:3rem;}
+.partner-card{
+  padding:1.2rem;text-align:center;
+  background:var(--card-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);border-radius:14px;transition:.3s;
+}
+.partner-card:hover{transform:translateY(-4px);border-color:var(--indigo);}
+.partner-icon{font-size:2rem;margin-bottom:.5rem;}
+.partner-name{font-size:.78rem;font-weight:600;}
+ 
+/* ── STUDENT ZONE ── */
+.zone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;}
+.zone-card{padding:1.8rem;}
+.zone-icon{font-size:2.5rem;margin-bottom:1rem;}
+.zone-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.zone-card p{font-size:.82rem;color:var(--text-muted);margin-bottom:1.2rem;}
+.btn-zone{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.55rem 1.2rem;border-radius:8px;font-size:.8rem;font-weight:600;
+  background:var(--glass);border:1px solid var(--glass-border);color:var(--text);
+  cursor:pointer;transition:.3s;
+}
+.btn-zone:hover{background:var(--indigo);border-color:var(--indigo);}
+ 
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+.contact-info-item{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+.ci-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;
+}
+.ci-label{font-size:.75rem;color:var(--text-muted);}
+.ci-value{font-size:.92rem;font-weight:600;}
+.map-placeholder{
+  width:100%;height:220px;border-radius:14px;overflow:hidden;
+  border:1px solid var(--glass-border);margin-top:1.5rem;
+  background:rgba(99,102,241,.05);display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;color:var(--text-muted);flex-direction:column;gap:.5rem;
+}
+.map-placeholder .map-icon{font-size:3rem;}
+.social-links{display:flex;gap:.8rem;margin-top:1.5rem;}
+.social-btn{
+  width:42px;height:42px;border-radius:10px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;cursor:pointer;transition:.3s;text-decoration:none;
+}
+.social-btn:hover{background:var(--indigo);border-color:var(--indigo);}
+ 
+/* ── FAQ ── */
+.faq-list{max-width:780px;}
+.faq-item{
+  border:1px solid var(--glass-border);border-radius:14px;margin-bottom:.8rem;
+  overflow:hidden;background:var(--card-bg);backdrop-filter:blur(12px);
+}
+.faq-q{
+  padding:1.2rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;font-weight:600;font-size:.92rem;transition:.2s;
+  user-select:none;
+}
+.faq-q:hover{color:var(--indigo);}
+.faq-q .arrow{transition:.3s;font-size:1.1rem;color:var(--text-muted);}
+.faq-item.open .faq-q .arrow{transform:rotate(180deg);}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;
+  font-size:.88rem;color:var(--text-muted);line-height:1.7;padding:0 1.5rem;
+}
+.faq-item.open .faq-a{max-height:200px;padding:0 1.5rem 1.2rem;}
+ 
+/* ── PLACEMENT STATS ── */
+.placement-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.2rem;margin-bottom:3rem;}
+.ps-card{
+  padding:1.5rem;text-align:center;
+  background:var(--card-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);border-radius:16px;
+}
+.ps-num{
+  font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:900;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.ps-label{font-size:.78rem;color:var(--text-muted);margin-top:.3rem;}
+ 
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  background:rgba(5,8,20,.9);border-top:1px solid var(--glass-border);
+  padding:3rem 1.5rem 1.5rem;
+}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem;max-width:1200px;margin:0 auto 2rem;}
+.footer-logo{
+  font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:900;
+  background:linear-gradient(135deg,var(--indigo),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.8rem;
+}
+.footer-desc{font-size:.82rem;color:var(--text-muted);line-height:1.7;}
+.footer-heading{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text);margin-bottom:1rem;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:.5rem;}
+.footer-links a{font-size:.82rem;color:var(--text-muted);text-decoration:none;cursor:pointer;transition:.2s;}
+.footer-links a:hover{color:var(--indigo);}
+.footer-bottom{
+  text-align:center;font-size:.78rem;color:var(--text-muted);
+  border-top:1px solid var(--glass-border);padding-top:1.2rem;max-width:1200px;margin:0 auto;
+}
+ 
+/* ── WA FLOAT BTN ── */
+.wa-btn{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:900;
+  width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;cursor:pointer;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:.3s;text-decoration:none;
+  animation:bouncePulse 3s infinite;
+}
+.wa-btn:hover{transform:scale(1.1);}
+@keyframes bouncePulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4);}50%{box-shadow:0 4px 35px rgba(37,211,102,.7);}}
+ 
+/* ── BACK TO TOP ── */
+.back-top{
+  position:fixed;bottom:1.5rem;left:1.5rem;z-index:900;
+  width:44px;height:44px;border-radius:12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  cursor:pointer;transition:.3s;opacity:0;pointer-events:none;
+}
+.back-top.show{opacity:1;pointer-events:all;}
+.back-top:hover{background:var(--indigo);border-color:var(--indigo);}
+ 
+/* ── ANIMATIONS ── */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp .7s ease both;}
+ 
+/* ── MOBILE NAV ── */
+@media(max-width:900px){
+  .nav-links{
+    position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;gap:0;
+    background:rgba(10,14,39,.97);
+    border-bottom:1px solid var(--glass-border);
+    max-height:0;overflow:hidden;transition:max-height .4s ease;
+  }
+  .nav-links.open{max-height:500px;}
+  .nav-links a{padding:.85rem 1.5rem;border-bottom:1px solid var(--glass-border);}
+  .hamburger{display:flex;}
+  .nav-actions .btn-nav{display:none;}
+  .theme-toggle{margin-left:.5rem;}
+}
+ 
+/* ── COURSE SEARCH ── */
+.search-bar{
+  display:flex;gap:.8rem;margin-bottom:2rem;flex-wrap:wrap;
+}
+.search-input{
+  flex:1;min-width:220px;padding:.8rem 1.2rem;border-radius:12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  color:var(--text);font-size:.9rem;outline:none;
+  font-family:'Inter',sans-serif;transition:.3s;
+}
+.search-input:focus{border-color:var(--indigo);}
+.search-input::placeholder{color:var(--text-muted);}
+ 
+/* ── CERT DOWNLOAD SECTION ── */
+.cert-verify{
+  background:var(--card-bg);border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px);border-radius:20px;padding:2rem;max-width:500px;
+}
+.cert-verify h3{font-size:1rem;font-weight:700;margin-bottom:1.2rem;}
+ 
+/* MOBILE NAV OVERLAY */
+@media(max-width:480px){
+  .stats-row{gap:1rem;}
+  .stat-card{min-width:120px;padding:1rem 1.2rem;}
+  .hero{padding:4rem 1rem 2rem;}
+  nav{padding:.7rem 1rem;}
+  .nav-logo{font-size:1rem;}
+}
+</style>
+</head>
+<body>
+ 
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <div class="logo-load">E-MAX</div>
+  <div style="font-size:.85rem;color:#94a3b8;margin-top:.5rem;font-family:'Inter',sans-serif;">Computer Education</div>
+  <div class="bar-wrap"><div class="bar"></div></div>
+</div>
+ 
+<!-- PARTICLE CANVAS -->
+<canvas id="bg-canvas"></canvas>
+ 
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="showPage('home')">⚡ E-MAX</div>
+  <div class="nav-links" id="navLinks">
+    <a onclick="showPage('home')" class="active">Home</a>
+    <a onclick="showPage('about')">About</a>
+    <a onclick="showPage('courses')">Courses</a>
+    <a onclick="showPage('admissions')">Admissions</a>
+    <a onclick="showPage('gallery')">Gallery</a>
+    <a onclick="showPage('results')">Results</a>
+    <a onclick="showPage('placement')">Placement</a>
+    <a onclick="showPage('student')">Student Zone</a>
+    <a onclick="showPage('contact')">Contact</a>
+    <a onclick="showPage('faq')">FAQ</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-nav btn-outline" onclick="showPage('admissions');window.scrollTo(0,0);">Enroll</button>
+    <button class="btn-nav btn-primary" onclick="showPage('contact')">Contact</button>
+    <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"></div>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+ 
+<!-- ══════════════════════════════ PAGE: HOME ══════════════════════════════ -->
+<div id="home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🏆 #1 Computer Education in Bareilly Region</div>
+    <h1>E-Max <span class="grad">Computer</span><br/>Education</h1>
+    <p class="hero-tagline">
+      <span id="typeText"></span><span class="type-cursor"></span>
+    </p>
+    <div class="hero-btns">
+      <button class="btn-hero btn-hero-primary" onclick="showPage('admissions');window.scrollTo(0,0);">🚀 Join Now</button>
+      <button class="btn-hero btn-hero-secondary" onclick="showPage('courses')">📚 Explore Courses</button>
+    </div>
+ 
+    <!-- 3D LAB ANIMATION -->
+    <div class="lab-3d">
+      <div class="floating-icon fi-1">💻</div>
+      <div class="floating-icon fi-2">🖥️</div>
+      <div class="floating-icon fi-3">📊</div>
+      <div class="floating-icon fi-4">🎨</div>
+      <div class="floating-icon fi-5">🌐</div>
+      <div class="monitor-wrap">
+        <div class="monitor">
+          <div class="monitor-screen">
+            <div class="code-line">&gt; Initializing E-Max EDU...</div>
+            <div class="code-line">  Loading courses: <span style="color:#4ade80">✓</span></div>
+            <div class="code-line">  Student Portal: <span style="color:#4ade80">LIVE</span></div>
+            <div class="code-line">  Placement: <span style="color:#facc15">100%</span></div>
+            <div class="code-line">  Skills.build() → SUCCESS</div>
+            <div class="code-line">  Career.launch() → 🚀</div>
+          </div>
+        </div>
+        <div class="monitor-base"></div>
+        <div class="monitor-stand"></div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- STATS -->
+  <div class="stats-row container">
+    <div class="stat-card">
+      <div class="stat-num" data-count="5000">0</div>
+      <div class="stat-label">Students Trained</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-count="15">0</div>
+      <div class="stat-label">Courses Offered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-count="100">0</div>
+      <div class="stat-label">% Placement Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-count="12">0</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-count="50">0</div>
+      <div class="stat-label">Hiring Partners</div>
+    </div>
+  </div>
+ 
+  <!-- POPULAR COURSES PREVIEW -->
+  <section style="padding-top:1rem;">
+    <div class="container">
+      <div class="section-label">What We Teach</div>
+      <h2 class="section-title">Popular <span class="grad-text">Courses</span></h2>
+      <p class="section-sub">Industry-aligned curriculum designed to give you real-world skills and career-ready confidence.</p>
+      <div class="courses-grid" id="homeCoursesGrid"></div>
+      <div style="text-align:center;margin-top:2rem;">
+        <button class="btn-submit" onclick="showPage('courses')">View All Courses →</button>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Student Reviews</div>
+      <h2 class="section-title">What Our <span class="grad-text">Students Say</span></h2>
+      <div class="testimonials" id="testimonialSlider"></div>
+    </div>
+  </section>
+ 
+  <!-- PLACEMENT HIGHLIGHTS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Career Success</div>
+      <h2 class="section-title">Placement <span class="grad-text">Highlights</span></h2>
+      <div class="placement-stats" id="homePlacementStats"></div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: ABOUT ══════════════════════════════ -->
+<div id="about" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">About <span class="grad-text">E-Max Education</span></h2>
+      <p class="section-sub">E-Max Computer Education has been transforming lives through quality computer education since 2012. Our mission is simple — equip every student with the digital skills needed to thrive in today's technology-driven world.</p>
+ 
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:4rem;" class="about-two-col">
+        <div class="glass-card" style="padding:2rem;">
+          <h3 style="font-family:'Orbitron',sans-serif;font-size:1rem;margin-bottom:1rem;">🎯 Our Mission</h3>
+          <p style="color:var(--text-muted);font-size:.88rem;line-height:1.8;">To provide affordable, industry-relevant computer education that empowers students from all backgrounds to achieve career success and financial independence through digital skills.</p>
+        </div>
+        <div class="glass-card" style="padding:2rem;">
+          <h3 style="font-family:'Orbitron',sans-serif;font-size:1rem;margin-bottom:1rem;">🌟 Our Vision</h3>
+          <p style="color:var(--text-muted);font-size:.88rem;line-height:1.8;">To be the most trusted and preferred computer education institute in Uttar Pradesh, known for quality training, student success, and industry connections.</p>
+        </div>
+      </div>
+ 
+      <div class="section-label">Why Choose Us</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">Why <span class="grad-text">E-Max?</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-bottom:4rem;">
+        <div class="glass-card" style="padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:.8rem;">🏅</div>
+          <h4 style="font-weight:700;margin-bottom:.5rem;">Certified Faculty</h4>
+          <p style="font-size:.82rem;color:var(--text-muted);">All our trainers are industry-certified professionals with 5+ years of real-world experience.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:.8rem;">💼</div>
+          <h4 style="font-weight:700;margin-bottom:.5rem;">100% Placement</h4>
+          <p style="font-size:.82rem;color:var(--text-muted);">We don't just teach — we ensure every eligible student gets placed in a reputed company.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:.8rem;">📜</div>
+          <h4 style="font-weight:700;margin-bottom:.5rem;">Govt. Recognized</h4>
+          <p style="font-size:.82rem;color:var(--text-muted);">Our certificates are government-recognized and accepted by top employers across India.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:.8rem;">🕐</div>
+          <h4 style="font-weight:700;margin-bottom:.5rem;">Flexible Timings</h4>
+          <p style="font-size:.82rem;color:var(--text-muted);">Morning, evening, and weekend batches to suit students, working professionals, and homemakers.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:.8rem;">💰</div>
+          <h4 style="font-weight:700;margin-bottom:.5rem;">Affordable Fees</h4>
+          <p style="font-size:.82rem;color:var(--text-muted);">Quality education at the most competitive prices, with EMI options available for all courses.</p>
+        </div>
+        <div class="glass-card" style="padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:.8rem;">🖥️</div>
+          <h4 style="font-weight:700;margin-bottom:.5rem;">Modern Lab</h4>
+          <p style="font-size:.82rem;color:var(--text-muted);">Fully air-conditioned computer lab with latest hardware and high-speed internet connectivity.</p>
+        </div>
+      </div>
+ 
+      <div class="section-label">Our Journey</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">Institute <span class="grad-text">Timeline</span></h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2012 — Foundation</div>
+          <h4 style="font-weight:700;margin-bottom:.3rem;">E-Max Computer Education Established</h4>
+          <p class="tl-text">Started with a small computer lab of 10 systems and a vision to democratize digital education in Bareilly.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2015 — Expansion</div>
+          <h4 style="font-weight:700;margin-bottom:.3rem;">New Campus & 500+ Students</h4>
+          <p class="tl-text">Expanded to a larger facility with 30+ computers and launched advanced courses including Tally and Graphic Design.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2018 — Recognition</div>
+          <h4 style="font-weight:700;margin-bottom:.3rem;">Government Affiliation & Awards</h4>
+          <p class="tl-text">Received government recognition and won the Best Computer Institute award in Uttar Pradesh.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2021 — Digital Era</div>
+          <h4 style="font-weight:700;margin-bottom:.3rem;">Online Classes & 2000+ Alumni</h4>
+          <p class="tl-text">Launched online learning platform during pandemic, maintaining uninterrupted education for all students.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2024 — Present</div>
+          <h4 style="font-weight:700;margin-bottom:.3rem;">5000+ Students Trained</h4>
+          <p class="tl-text">Now the most preferred computer institute in the region with 100% placement record and 50+ hiring partners.</p>
+        </div>
+      </div>
+ 
+      <div style="margin-top:4rem;">
+        <div class="section-label">Our Team</div>
+        <h2 class="section-title" style="margin-bottom:2rem;">Expert <span class="grad-text">Faculty</span></h2>
+        <div class="faculty-grid">
+          <div class="glass-card faculty-card">
+            <div class="faculty-avatar" style="background:rgba(99,102,241,.15);">👨‍🏫</div>
+            <h3>Mr. Rahul Sharma</h3>
+            <p>Director & Lead Trainer</p>
+            <div class="faculty-exp">12+ Years Experience</div>
+          </div>
+          <div class="glass-card faculty-card">
+            <div class="faculty-avatar" style="background:rgba(139,92,246,.15);">👩‍💻</div>
+            <h3>Ms. Priya Verma</h3>
+            <p>Graphic Design Expert</p>
+            <div class="faculty-exp">8+ Years Experience</div>
+          </div>
+          <div class="glass-card faculty-card">
+            <div class="faculty-avatar" style="background:rgba(34,211,238,.15);">👨‍💼</div>
+            <h3>Mr. Anil Gupta</h3>
+            <p>Tally & Accounts Trainer</p>
+            <div class="faculty-exp">10+ Years Experience</div>
+          </div>
+          <div class="glass-card faculty-card">
+            <div class="faculty-avatar" style="background:rgba(236,72,153,.15);">👩‍🏫</div>
+            <h3>Ms. Neha Singh</h3>
+            <p>Web Design Trainer</p>
+            <div class="faculty-exp">6+ Years Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: COURSES ══════════════════════════════ -->
+<div id="courses" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">All Programs</div>
+      <h2 class="section-title">Our <span class="grad-text">Courses</span></h2>
+      <p class="section-sub">Choose from 10+ professionally designed courses and start your digital journey today.</p>
+      <div class="search-bar">
+        <input class="search-input" type="text" id="courseSearch" placeholder="🔍  Search courses..." oninput="filterCourses(this.value)"/>
+      </div>
+      <div class="courses-grid" id="allCoursesGrid"></div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: ADMISSIONS ══════════════════════════════ -->
+<div id="admissions" class="page">
+  <a name="admissions"></a>
+  <section style="padding-top:120px;">
+    <div class="container" style="max-width:800px;">
+      <div class="section-label">Join Us</div>
+      <h2 class="section-title">Online <span class="grad-text">Admission</span></h2>
+      <p class="section-sub">Fill in your details below and our counselor will get back to you within 24 hours.</p>
+      <div class="glass-card" style="padding:2.5rem;" id="admissionFormWrap">
+        <form onsubmit="submitForm(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input class="form-control" type="text" placeholder="Enter your full name" required/>
+            </div>
+            <div class="form-group">
+              <label>Father's Name *</label>
+              <input class="form-control" type="text" placeholder="Father's name" required/>
+            </div>
+            <div class="form-group">
+              <label>Mobile Number *</label>
+              <input class="form-control" type="tel" placeholder="+91 XXXXX XXXXX" required/>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input class="form-control" type="email" placeholder="your@email.com"/>
+            </div>
+            <div class="form-group">
+              <label>Date of Birth *</label>
+              <input class="form-control" type="date" required/>
+            </div>
+            <div class="form-group">
+              <label>Select Course *</label>
+              <select class="form-control" required>
+                <option value="">— Select Course —</option>
+                <option>Basic Computer Course</option>
+                <option>DCA – Diploma in Computer Applications</option>
+                <option>ADCA – Advanced Diploma in Computer Applications</option>
+                <option>Tally Prime with GST</option>
+                <option>Advanced Excel</option>
+                <option>Graphic Designing</option>
+                <option>Web Designing</option>
+                <option>English Typing</option>
+                <option>Hindi Typing</option>
+                <option>Computer Teacher Training (CTT)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Qualification *</label>
+              <select class="form-control" required>
+                <option value="">— Select —</option>
+                <option>10th</option>
+                <option>12th</option>
+                <option>Graduate</option>
+                <option>Post Graduate</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Batch Preference</label>
+              <select class="form-control">
+                <option>Morning (7 AM – 10 AM)</option>
+                <option>Afternoon (12 PM – 3 PM)</option>
+                <option>Evening (5 PM – 8 PM)</option>
+                <option>Weekend Batch</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:1.2rem;">
+            <label>Address</label>
+            <textarea class="form-control" rows="3" placeholder="Your complete address"></textarea>
+          </div>
+          <div style="margin-top:1.2rem;">
+            <label style="display:flex;align-items:center;gap:.7rem;cursor:pointer;font-size:.85rem;color:var(--text-muted);">
+              <input type="checkbox" required/> I agree to the terms and conditions of E-Max Computer Education
+            </label>
+          </div>
+          <button type="submit" class="btn-submit">Submit Application 🚀</button>
+        </form>
+      </div>
+      <div class="thankyou-msg" id="thankyouMsg">
+        <div class="checkmark">🎉</div>
+        <h3>Application Submitted!</h3>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem;">Thank you for applying to E-Max Computer Education. Our counselor will contact you within 24 hours at your registered mobile number.</p>
+        <button class="btn-submit" onclick="showPage('courses')">Browse Courses</button>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: GALLERY ══════════════════════════════ -->
+<div id="gallery" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Institute Life</div>
+      <h2 class="section-title">Photo <span class="grad-text">Gallery</span></h2>
+      <p class="section-sub">Glimpses from our classrooms, events, and student activities.</p>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: RESULTS ══════════════════════════════ -->
+<div id="results" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Academic Excellence</div>
+      <h2 class="section-title">Student <span class="grad-text">Results</span></h2>
+      <p class="section-sub">Celebrating our top performers and their outstanding achievements.</p>
+      <div class="toppers-grid" id="toppersGrid"></div>
+ 
+      <div style="margin-top:4rem;">
+        <div class="section-label">Verify Certificate</div>
+        <h2 class="section-title" style="margin-bottom:2rem;">Certificate <span class="grad-text">Verification</span></h2>
+        <div class="cert-verify glass-card">
+          <h3>🔐 Verify Your Certificate</h3>
+          <div class="form-group">
+            <label>Enter Certificate Number</label>
+            <input class="form-control" type="text" placeholder="e.g. EMAX-2024-001234"/>
+          </div>
+          <button class="btn-submit" style="margin-top:1rem;" onclick="verifyCert()">Verify Now</button>
+          <div id="certResult" style="display:none;margin-top:1rem;padding:1rem;background:rgba(34,211,238,.1);border:1px solid var(--cyan);border-radius:10px;font-size:.85rem;color:var(--cyan);">
+            ✅ Certificate Verified! Valid certificate issued by E-Max Computer Education.
+          </div>
+        </div>
+      </div>
+ 
+      <div style="margin-top:4rem;">
+        <div class="section-label">Success Stories</div>
+        <h2 class="section-title" style="margin-bottom:2rem;"><span class="grad-text">Alumni</span> Stories</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;" id="successStories"></div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: PLACEMENT ══════════════════════════════ -->
+<div id="placement" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Career Outcomes</div>
+      <h2 class="section-title">Placement <span class="grad-text">Records</span></h2>
+      <p class="section-sub">Our students are working at top companies across India. Here's a snapshot of our placement success.</p>
+      <div class="placement-stats" id="placementStats"></div>
+      <div class="section-label">Hiring Partners</div>
+      <h2 class="section-title" style="margin-bottom:2rem;">Our <span class="grad-text">Recruiters</span></h2>
+      <div class="partners-grid" id="partnersGrid"></div>
+      <div style="margin-top:3rem;">
+        <div class="section-label">Interview Prep</div>
+        <h2 class="section-title" style="margin-bottom:2rem;">Career <span class="grad-text">Guidance</span></h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;">
+          <div class="glass-card" style="padding:1.5rem;">
+            <div style="font-size:2rem;margin-bottom:.8rem;">📝</div>
+            <h4 style="font-weight:700;margin-bottom:.5rem;">Resume Building</h4>
+            <p style="font-size:.82rem;color:var(--text-muted);">We help you craft an ATS-friendly resume that gets noticed by recruiters.</p>
+          </div>
+          <div class="glass-card" style="padding:1.5rem;">
+            <div style="font-size:2rem;margin-bottom:.8rem;">🤝</div>
+            <h4 style="font-weight:700;margin-bottom:.5rem;">Mock Interviews</h4>
+            <p style="font-size:.82rem;color:var(--text-muted);">Practice with HR and technical mock interviews to build confidence.</p>
+          </div>
+          <div class="glass-card" style="padding:1.5rem;">
+            <div style="font-size:2rem;margin-bottom:.8rem;">💬</div>
+            <h4 style="font-weight:700;margin-bottom:.5rem;">Soft Skills Training</h4>
+            <p style="font-size:.82rem;color:var(--text-muted);">Communication, presentation, and professional etiquette training included.</p>
+          </div>
+          <div class="glass-card" style="padding:1.5rem;">
+            <div style="font-size:2rem;margin-bottom:.8rem;">🔗</div>
+            <h4 style="font-weight:700;margin-bottom:.5rem;">LinkedIn Profile</h4>
+            <p style="font-size:.82rem;color:var(--text-muted);">Build a strong LinkedIn presence to attract opportunities from top companies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: STUDENT ZONE ══════════════════════════════ -->
+<div id="student" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Student Portal</div>
+      <h2 class="section-title">Student <span class="grad-text">Zone</span></h2>
+      <p class="section-sub">Access notes, assignments, exam schedules, and more — all in one place.</p>
+      <div class="zone-grid" id="zoneGrid"></div>
+      <div style="margin-top:3rem;max-width:400px;">
+        <div class="glass-card" style="padding:2rem;">
+          <h3 style="font-family:'Orbitron',sans-serif;font-size:.95rem;margin-bottom:1.5rem;">🔐 Student Login</h3>
+          <div class="form-group">
+            <label>Roll Number</label>
+            <input class="form-control" type="text" placeholder="e.g. EMAX2024001"/>
+          </div>
+          <div class="form-group" style="margin-top:1rem;">
+            <label>Password</label>
+            <input class="form-control" type="password" placeholder="Enter your password"/>
+          </div>
+          <button class="btn-submit" style="margin-top:1.2rem;" onclick="alert('Login portal coming soon!')">Login →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: CONTACT ══════════════════════════════ -->
+<div id="contact" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title">Contact <span class="grad-text">Us</span></h2>
+      <p class="section-sub">We'd love to hear from you. Reach out through any channel below or fill the form.</p>
+      <div class="contact-grid">
+        <div>
+          <div class="contact-info-item">
+            <div class="ci-icon">📧</div>
+            <div>
+              <div class="ci-label">Email Us</div>
+              <div class="ci-value">afsanamalik611@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">📱</div>
+            <div>
+              <div class="ci-label">Call / WhatsApp</div>
+              <div class="ci-value">+91 7817082501</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">📍</div>
+            <div>
+              <div class="ci-label">Visit Us</div>
+              <div class="ci-value">E-Max Computer Education, Bareilly, Uttar Pradesh</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon">🕐</div>
+            <div>
+              <div class="ci-label">Working Hours</div>
+              <div class="ci-value">Mon–Sat: 8 AM – 8 PM</div>
+            </div>
+          </div>
+          <div class="social-links">
+            <a class="social-btn" href="#" title="Facebook">📘</a>
+            <a class="social-btn" href="#" title="Instagram">📸</a>
+            <a class="social-btn" href="#" title="YouTube">📺</a>
+            <a class="social-btn" href="https://wa.me/917817082501" target="_blank" title="WhatsApp">💬</a>
+            <a class="social-btn" href="#" title="Telegram">✈️</a>
+          </div>
+          <div class="map-placeholder">
+            <div class="map-icon">🗺️</div>
+            <div>E-Max Computer Education</div>
+            <div style="font-size:.75rem;">Bareilly, Uttar Pradesh, India</div>
+          </div>
+        </div>
+        <div>
+          <div class="glass-card" style="padding:2rem;">
+            <h3 style="font-family:'Orbitron',sans-serif;font-size:.95rem;margin-bottom:1.5rem;">Send a Message</h3>
+            <div class="form-group">
+              <label>Your Name</label>
+              <input class="form-control" type="text" placeholder="Full name"/>
+            </div>
+            <div class="form-group" style="margin-top:1rem;">
+              <label>Mobile / Email</label>
+              <input class="form-control" type="text" placeholder="Contact info"/>
+            </div>
+            <div class="form-group" style="margin-top:1rem;">
+              <label>Subject</label>
+              <input class="form-control" type="text" placeholder="Course inquiry, fees, etc."/>
+            </div>
+            <div class="form-group" style="margin-top:1rem;">
+              <label>Message</label>
+              <textarea class="form-control" rows="4" placeholder="How can we help you?"></textarea>
+            </div>
+            <button class="btn-submit" style="width:100%;margin-top:1.2rem;" onclick="alert('Message sent! We will contact you soon.')">Send Message ✉️</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ PAGE: FAQ ══════════════════════════════ -->
+<div id="faq" class="page">
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="section-label">Questions & Answers</div>
+      <h2 class="section-title">Frequently Asked <span class="grad-text">Questions</span></h2>
+      <p class="section-sub">Everything you need to know about E-Max Computer Education.</p>
+      <div class="faq-list" id="faqList"></div>
+      <div style="margin-top:3rem;padding:2rem;background:var(--card-bg);border:1px solid var(--glass-border);border-radius:20px;text-align:center;">
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Still have questions?</h3>
+        <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.5rem;">Our team is always here to help. Reach out to us!</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-submit" onclick="showPage('contact')">Contact Us</button>
+          <a href="https://wa.me/917817082501" target="_blank" style="text-decoration:none;">
+            <button class="btn-submit" style="background:linear-gradient(135deg,#25d366,#128c7e);">WhatsApp Us 💬</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+ 
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer id="mainFooter" style="display:none;">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">⚡ E-MAX</div>
+      <p class="footer-desc">Empowering Skills, Building Careers. Premier computer education institute in Bareilly, UP.</p>
+      <div style="margin-top:1rem;display:flex;gap:.6rem;">
+        <a class="social-btn" href="#" style="width:36px;height:36px;">📘</a>
+        <a class="social-btn" href="#" style="width:36px;height:36px;">📸</a>
+        <a class="social-btn" href="#" style="width:36px;height:36px;">📺</a>
+        <a class="social-btn" href="https://wa.me/917817082501" target="_blank" style="width:36px;height:36px;">💬</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading">Quick Links</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('courses')">Courses</a></li>
+        <li><a onclick="showPage('admissions')">Admissions</a></li>
+        <li><a onclick="showPage('placement')">Placement</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Courses</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('courses')">Basic Computer</a></li>
+        <li><a onclick="showPage('courses')">DCA / ADCA</a></li>
+        <li><a onclick="showPage('courses')">Tally Prime</a></li>
+        <li><a onclick="showPage('courses')">Graphic Design</a></li>
+        <li><a onclick="showPage('courses')">Web Design</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <ul class="footer-links" style="list-style:none;">
+        <li style="color:var(--text-muted);font-size:.82rem;margin-bottom:.5rem;">📧 afsanamalik611@gmail.com</li>
+        <li style="color:var(--text-muted);font-size:.82rem;margin-bottom:.5rem;">📱 +91 7817082501</li>
+        <li style="color:var(--text-muted);font-size:.82rem;">📍 Bareilly, Uttar Pradesh</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2024 E-Max Computer Education. All rights reserved. | Designed with ❤️ for excellence in education.
+  </div>
+</footer>
+ 
+<!-- FLOATING BUTTONS -->
+<a class="wa-btn" href="https://wa.me/917817082501" target="_blank" title="WhatsApp Us">💬</a>
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">⬆</button>
+ 
+<script>
+// ══════════════════════════════
+// DATA
+// ══════════════════════════════
+const COURSES = [
+  {icon:'💻',title:'Basic Computer Course',desc:'MS Office, Internet, Email, and essential computer skills for beginners.',duration:'3 Months',fees:'₹2,500',features:['MS Word, Excel, PowerPoint','Internet & Email','Certificate Awarded'],bg:'rgba(99,102,241,.15)',color:'#6366f1'},
+  {icon:'📂',title:'DCA',desc:'Diploma in Computer Applications — a comprehensive beginner-to-intermediate course.',duration:'6 Months',fees:'₹5,000',features:['Programming Basics','Database Management','Office Suite','Project Work'],bg:'rgba(139,92,246,.15)',color:'#8b5cf6'},
+  {icon:'🎓',title:'ADCA',desc:'Advanced Diploma — covers DCA + web, graphics, and advanced software.',duration:'12 Months',fees:'₹8,500',features:['All DCA Content','Web Design Basics','Graphic Design','Advanced Excel'],bg:'rgba(34,211,238,.15)',color:'#22d3ee'},
+  {icon:'📊',title:'Tally Prime with GST',desc:'Complete accounting software with GST filing, inventory, and payroll.',duration:'3 Months',fees:'₹3,500',features:['GST Filing','Inventory Management','Payroll','Banking Integration'],bg:'rgba(74,222,128,.15)',color:'#4ade80'},
+  {icon:'📈',title:'Advanced Excel',desc:'Master Excel formulas, pivot tables, charts, macros, and data analysis.',duration:'2 Months',fees:'₹2,000',features:['VLOOKUP, HLOOKUP','Pivot Tables & Charts','Macros & VBA','Data Analysis'],bg:'rgba(250,204,21,.15)',color:'#facc15'},
+  {icon:'🎨',title:'Graphic Designing',desc:'Adobe Photoshop, Illustrator, CorelDraw for professional design work.',duration:'4 Months',fees:'₹5,500',features:['Photoshop & Illustrator','CorelDraw','Logo & Banner Design','Print & Digital Media'],bg:'rgba(236,72,153,.15)',color:'#ec4899'},
+  {icon:'🌐',title:'Web Designing',desc:'HTML, CSS, JavaScript, and responsive website development.',duration:'4 Months',fees:'₹5,000',features:['HTML5 & CSS3','JavaScript Basics','Responsive Design','Portfolio Project'],bg:'rgba(99,102,241,.15)',color:'#6366f1'},
+  {icon:'⌨️',title:'English Typing',desc:'Touch typing in English with speed and accuracy training.',duration:'2 Months',fees:'₹1,500',features:['Touch Typing Technique','Speed Building','Accuracy Training','Certificate at 30 WPM'],bg:'rgba(139,92,246,.15)',color:'#8b5cf6'},
+  {icon:'🖊️',title:'Hindi Typing',desc:'Hindi typing on Remington & Inscript keyboard layouts.',duration:'2 Months',fees:'₹1,500',features:['Remington Layout','Inscript Keyboard','Speed Training','Govt. Exam Ready'],bg:'rgba(34,211,238,.15)',color:'#22d3ee'},
+  {icon:'🏫',title:'Computer Teacher Training (CTT)',desc:'Designed for aspiring teachers — pedagogy, curriculum, and classroom tech.',duration:'6 Months',fees:'₹6,000',features:['Teaching Methodology','Curriculum Design','Smart Board Usage','Teaching Practice'],bg:'rgba(250,204,21,.15)',color:'#facc15'},
+];
+ 
+const TESTIMONIALS = [
+  {text:'E-Max changed my life. I came with zero computer knowledge and left with a job in hand. The trainers are amazing and the placement support is real.',name:'Anjali Sharma',role:'Data Entry Operator, Bareilly',stars:5,init:'A',bg:'#6366f1'},
+  {text:'Best Tally course in the city. I cleared my CA foundation while studying here. The GST module is exceptionally thorough.',name:'Rahul Verma',role:'Junior Accountant, Delhi',stars:5,init:'R',bg:'#8b5cf6'},
+  {text:'Joined graphic design course — within 3 months I started freelancing on Fiverr. Highly recommend the faculty here.',name:'Priya Singh',role:'Freelance Designer',stars:5,init:'P',bg:'#ec4899'},
+  {text:'The ADCA course gave me a solid foundation. The practical exposure and the real project work set me apart in interviews.',name:'Mohit Kumar',role:'Web Developer, Lucknow',stars:5,init:'M',bg:'#22d3ee'},
+  {text:'I prepared for government typing exams here. Cleared UP TGT typing in first attempt. Thank you E-Max!',name:'Sunita Devi',role:'Govt. Employee, UP',stars:5,init:'S',bg:'#4ade80'},
+];
+ 
+const GALLERY_ITEMS = [
+  {icon:'🖥️',cap:'State-of-the-art Computer Lab'},
+  {icon:'📚',cap:'Library & Study Area'},
+  {icon:'🏆',cap:'Annual Prize Distribution 2023'},
+  {icon:'🎨',cap:'Graphic Design Workshop'},
+  {icon:'👨‍💻',cap:'Web Development Class'},
+  {icon:'📊',cap:'Tally Training Session'},
+  {icon:'🎓',cap:'Certificate Distribution Ceremony'},
+  {icon:'⌨️',cap:'Typing Speed Contest'},
+  {icon:'🌐',cap:'Internet & Digital Literacy Drive'},
+  {icon:'📸',cap:'Student Projects Exhibition'},
+  {icon:'🤝',cap:'Industry Expert Guest Lecture'},
+  {icon:'🏫',cap:'New Classroom Inauguration'},
+];
+ 
+const TOPPERS = [
+  {name:'Neha Gupta',course:'ADCA',score:'98%',rank:1},
+  {name:'Arjun Patel',course:'Tally Prime',score:'96%',rank:2},
+  {name:'Swati Singh',course:'Graphic Design',score:'95%',rank:3},
+  {name:'Ravi Sharma',course:'Web Design',score:'94%',rank:4},
+  {name:'Kavita Verma',course:'Advanced Excel',score:'93%',rank:5},
+  {name:'Amit Kumar',course:'DCA',score:'92%',rank:6},
+];
+ 
+const SUCCESS_STORIES = [
+  {name:'Poonam Yadav',story:'After completing the ADCA course, Poonam secured a BPO job within 2 weeks of completing her course and now earns ₹18,000/month.',role:'BPO Executive, Bareilly'},
+  {name:'Vikram Tiwari',story:'Vikram\'s Tally skills landed him a role at a CA firm. He now handles GST filing for 20+ businesses independently.',role:'Accounts Manager, Delhi'},
+  {name:'Rekha Joshi',story:'As a homemaker, Rekha took our typing course and now works as a government data entry operator with a stable income.',role:'Data Entry, UP Govt.'},
+];
+ 
+const FAQS = [
+  {q:'What is the duration of your courses?',a:'Course durations range from 2 months (Typing courses) to 12 months (ADCA). Most diploma courses are 3–6 months long. Please check the specific course page for exact durations.'},
+  {q:'What are the fees and payment options?',a:'Fees range from ₹1,500 for typing courses to ₹8,500 for ADCA. We offer easy EMI options (2–4 installments) for all diploma courses. No hidden charges.'},
+  {q:'Are your certificates government-recognized?',a:'Yes! Our certificates are government-recognized and widely accepted by employers across India. DCA and ADCA certificates are particularly valued for government job applications.'},
+  {q:'Do you provide placement assistance?',a:'Absolutely! We have a dedicated placement cell that connects students with our 50+ hiring partners. We conduct mock interviews, resume workshops, and regular campus drives.'},
+  {q:'Do you offer online classes?',a:'Yes, we offer online classes for most courses. Online batches run on Zoom/Google Meet with the same curriculum and live interaction as offline classes.'},
+  {q:'What is the admission process?',a:'Fill out the online admission form on this website or visit our center directly. Bring your original documents (Aadhar, marksheets). Our counselor will guide you to the best course for your goals.'},
+  {q:'What documents are required for admission?',a:'Aadhar Card, 2 Passport Photos, Marksheets of last qualification (10th/12th), and School/College Transfer Certificate if applicable.'},
+  {q:'Is there a minimum qualification required?',a:'Basic Computer Course and Typing courses require only 8th pass. DCA requires 10th pass. ADCA requires 12th pass. CTT requires graduation.'},
+  {q:'What are the batch timings?',a:'We have morning (7–10 AM), afternoon (12–3 PM), and evening (5–8 PM) batches on weekdays, plus weekend-only batches (Sat–Sun) for working professionals.'},
+  {q:'How can I contact you for more information?',a:'Call or WhatsApp us at +91 7817082501, or email afsanamalik611@gmail.com. You can also fill the contact form on this website and we\'ll get back within a few hours.'},
+];
+ 
+const PARTNERS = [
+  {icon:'🏦',name:'Axis Bank'},{icon:'🏢',name:'Infosys BPO'},{icon:'🏪',name:'Reliance Digital'},
+  {icon:'📦',name:'Amazon'},{icon:'🏥',name:'Apollo Group'},{icon:'📱',name:'Airtel'},
+  {icon:'🚗',name:'Maruti Udyog'},{icon:'🏬',name:'D-Mart'},{icon:'💊',name:'Sun Pharma'},
+  {icon:'🏛️',name:'UP Govt.'},{icon:'📋',name:'HDFC Bank'},{icon:'💡',name:'BSES'},
+];
+ 
+const ZONE_ITEMS = [
+  {icon:'📄',title:'Notes & Study Material',desc:'Download comprehensive notes for all subjects in PDF format.',btn:'Download Notes'},
+  {icon:'📝',title:'Assignments',desc:'Access your assignments and submit them online before the deadline.',btn:'View Assignments'},
+  {icon:'💻',title:'Practice Material',desc:'Hands-on practice exercises and lab worksheets for all courses.',btn:'Start Practice'},
+  {icon:'📢',title:'Important Notices',desc:'Stay updated with batch changes, exam dates, and announcements.',btn:'View Notices'},
+  {icon:'📅',title:'Exam Schedule',desc:'Check your upcoming exam dates and preparation guidelines.',btn:'View Schedule'},
+  {icon:'🏆',title:'Mock Tests',desc:'Take online mock tests to evaluate your preparation level.',btn:'Take Mock Test'},
+];
+ 
+const HOME_PLACEMENT = [
+  {num:'5000+',label:'Students Placed'},
+  {num:'50+',label:'Hiring Partners'},
+  {num:'₹18K',label:'Avg. Starting Salary'},
+  {num:'15',label:'Days Avg. Placement Time'},
+  {num:'100%',label:'Placement Assistance'},
+];
+ 
+// ══════════════════════════════
+// RENDER FUNCTIONS
+// ══════════════════════════════
+function renderCourseCard(c){
+  return `
+  <div class="glass-card course-card" style="--accent:${c.color}">
+    <div class="course-icon" style="background:${c.bg};color:${c.color}">${c.icon}</div>
+    <h3>${c.title}</h3>
+    <p>${c.desc}</p>
+    <div class="course-meta">
+      <span class="badge badge-purple">⏱ ${c.duration}</span>
+      <span class="badge badge-cyan">💰 ${c.fees}</span>
+    </div>
+    <ul style="list-style:none;margin-bottom:1.2rem;">
+      ${c.features.map(f=>`<li style="font-size:.78rem;color:var(--text-muted);padding:.2rem 0;">✅ ${f}</li>`).join('')}
+    </ul>
+    <button class="btn-enroll" onclick="showPage('admissions');document.getElementById('admissions').scrollIntoView({behavior:'smooth'});">Enroll Now →</button>
+  </div>`;
+}
+ 
+function renderAll(){
+  // Home courses (first 6)
+  document.getElementById('homeCoursesGrid').innerHTML = COURSES.slice(0,6).map(renderCourseCard).join('');
+  // All courses
+  document.getElementById('allCoursesGrid').innerHTML = COURSES.map(renderCourseCard).join('');
+  // Testimonials
+  document.getElementById('testimonialSlider').innerHTML = TESTIMONIALS.map(t=>`
+    <div class="testi-card">
+      <div class="testi-stars">${'⭐'.repeat(t.stars)}</div>
+      <p class="testi-text">"${t.text}"</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:${t.bg}">${t.init}</div>
+        <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div>
+      </div>
+    </div>`).join('');
+  // Home placement
+  document.getElementById('homePlacementStats').innerHTML = HOME_PLACEMENT.map(p=>`
+    <div class="ps-card"><div class="ps-num">${p.num}</div><div class="ps-label">${p.label}</div></div>`).join('');
+  // Gallery
+  document.getElementById('galleryGrid').innerHTML = GALLERY_ITEMS.map(g=>`
+    <div class="gallery-item" onclick="alert('Lightbox preview: ${g.cap}')">
+      <div class="gallery-thumb">${g.icon}</div>
+      <div class="gallery-cap">${g.cap}</div>
+    </div>`).join('');
+  // Toppers
+  const rankClass = r => r===1?'rank-1':r===2?'rank-2':r===3?'rank-3':'rank-n';
+  document.getElementById('toppersGrid').innerHTML = TOPPERS.map(t=>`
+    <div class="glass-card topper-card">
+      <div class="topper-rank ${rankClass(t.rank)}">#${t.rank}</div>
+      <h3>${t.name}</h3>
+      <p>${t.course}</p>
+      <div class="topper-score">${t.score}</div>
+    </div>`).join('');
+  // Success stories
+  document.getElementById('successStories').innerHTML = SUCCESS_STORIES.map(s=>`
+    <div class="glass-card" style="padding:1.8rem;">
+      <div style="font-size:1.5rem;margin-bottom:.8rem;">⭐</div>
+      <h3 style="font-size:.95rem;font-weight:700;margin-bottom:.3rem;">${s.name}</h3>
+      <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7;margin-bottom:.8rem;">${s.story}</p>
+      <span class="badge badge-purple">${s.role}</span>
+    </div>`).join('');
+  // Placement stats
+  document.getElementById('placementStats').innerHTML = HOME_PLACEMENT.map(p=>`
+    <div class="ps-card"><div class="ps-num">${p.num}</div><div class="ps-label">${p.label}</div></div>`).join('');
+  // Partners
+  document.getElementById('partnersGrid').innerHTML = PARTNERS.map(p=>`
+    <div class="partner-card"><div class="partner-icon">${p.icon}</div><div class="partner-name">${p.name}</div></div>`).join('');
+  // Student Zone
+  document.getElementById('zoneGrid').innerHTML = ZONE_ITEMS.map(z=>`
+    <div class="glass-card zone-card">
+      <div class="zone-icon">${z.icon}</div>
+      <h3>${z.title}</h3>
+      <p>${z.desc}</p>
+      <button class="btn-zone" onclick="alert('${z.btn} feature coming soon! Please login to access.')">${z.btn} →</button>
+    </div>`).join('');
+  // FAQ
+  document.getElementById('faqList').innerHTML = FAQS.map((f,i)=>`
+    <div class="faq-item" id="faq${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <span>${f.q}</span><span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">${f.a}</div>
+    </div>`).join('');
+}
+ 
+function filterCourses(q){
+  const filtered = q ? COURSES.filter(c=>c.title.toLowerCase().includes(q.toLowerCase())||c.desc.toLowerCase().includes(q.toLowerCase())) : COURSES;
+  document.getElementById('allCoursesGrid').innerHTML = filtered.length ? filtered.map(renderCourseCard).join('') : '<p style="color:var(--text-muted);grid-column:1/-1;text-align:center;padding:2rem;">No courses found. Try a different search.</p>';
+}
+ 
+function toggleFAQ(i){
+  const el = document.getElementById('faq'+i);
+  el.classList.toggle('open');
+}
+ 
+// ══════════════════════════════
+// PAGE NAVIGATION
+// ══════════════════════════════
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('onclick')===`showPage('${id}')`);
+  });
+  // footer only on non-home pages (also show on home after hero)
+  document.getElementById('mainFooter').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  // close mobile nav
+  document.getElementById('navLinks').classList.remove('open');
+}
+ 
+// ══════════════════════════════
+// FORM SUBMIT
+// ══════════════════════════════
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('admissionFormWrap').style.display='none';
+  document.getElementById('thankyouMsg').style.display='block';
+}
+ 
+function verifyCert(){
+  document.getElementById('certResult').style.display='block';
+}
+ 
+// ══════════════════════════════
+// HAMBURGER
+// ══════════════════════════════
+function toggleNav(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+ 
+// ══════════════════════════════
+// THEME TOGGLE
+// ══════════════════════════════
+function toggleTheme(){
+  document.body.classList.toggle('light-mode');
+}
+ 
+// ══════════════════════════════
+// TYPING ANIMATION
+// ══════════════════════════════
+const phrases = ['Empowering Skills, Building Careers','Learn. Grow. Succeed.','Your Future Starts Here','Professional Computer Training'];
+let pi=0,ci=0,del=false;
+function typeLoop(){
+  const el = document.getElementById('typeText');
+  if(!el) return;
+  const p = phrases[pi];
+  if(del){
+    el.textContent = p.substring(0,ci--);
+    if(ci<0){del=false;pi=(pi+1)%phrases.length;}
+    setTimeout(typeLoop,50);
+  } else {
+    el.textContent = p.substring(0,ci++);
+    if(ci>p.length){del=true;setTimeout(typeLoop,1800);return;}
+    setTimeout(typeLoop,80);
+  }
+}
+ 
+// ══════════════════════════════
+// COUNTER ANIMATION
+// ══════════════════════════════
+function animateCounters(){
+  document.querySelectorAll('.stat-num[data-count]').forEach(el=>{
+    const target = parseInt(el.dataset.count);
+    let current = 0;
+    const step = target/60;
+    const timer = setInterval(()=>{
+      current = Math.min(current+step,target);
+      el.textContent = Math.floor(current)+(target===100?'%':target>=1000?'+':'');
+      if(current>=target) clearInterval(timer);
+    },25);
+  });
+}
+ 
+// ══════════════════════════════
+// PARTICLE CANVAS
+// ══════════════════════════════
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W,H,particles=[];
+  const COLORS = ['#6366f1','#8b5cf6','#22d3ee','#ec4899'];
+  let mouse = {x:0,y:0};
+ 
+  function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+  window.addEventListener('resize',()=>{resize();});
+  window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+  resize();
+ 
+  for(let i=0;i<90;i++){
+    particles.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*2+.5,
+      vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,
+      color:COLORS[Math.floor(Math.random()*COLORS.length)],
+      alpha:Math.random()*.5+.2,
+    });
+  }
+ 
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      // mouse repel
+      const dx=p.x-mouse.x,dy=p.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){const f=.6*(1-dist/120);p.vx+=f*dx/dist;p.vy+=f*dy/dist;}
+      p.vx*=.98;p.vy*=.98;
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.color+(Math.floor(p.alpha*255).toString(16).padStart(2,'0'));
+      ctx.fill();
+    });
+    // draw connections
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<100){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(99,102,241,${.08*(1-d/100)})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+ 
+// ══════════════════════════════
+// BACK TO TOP
+// ══════════════════════════════
+window.addEventListener('scroll',()=>{
+  document.getElementById('backTop').classList.toggle('show',window.scrollY>300);
+});
+ 
+// ══════════════════════════════
+// INIT
+// ══════════════════════════════
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const loader = document.getElementById('loader');
+    loader.style.opacity='0';
+    setTimeout(()=>loader.style.display='none',600);
+    renderAll();
+    typeLoop();
+    setTimeout(animateCounters,800);
+    document.getElementById('mainFooter').style.display='block';
+  },2200);
+});
+ 
+// Responsive about grid fix
+const style = document.createElement('style');
+style.textContent=`@media(max-width:640px){.about-two-col{grid-template-columns:1fr!important;}}`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
+ 
+
